@@ -4,7 +4,7 @@ const path = require('path');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const config = {
-  entry: './main.jsx',
+  entry: ['whatwg-fetch', './main.jsx'],
   module: {
     loaders: [
       {
@@ -26,7 +26,8 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV)
+        NODE_ENV: JSON.stringify(NODE_ENV),
+        RIJKSMUSEUM_KEY: process.env.RIJKSMUSEUM_KEY
       }
     })
   ],
