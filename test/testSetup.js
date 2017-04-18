@@ -5,6 +5,9 @@ import chaiEnzyme from 'chai-enzyme';
 import {mount, shallow} from 'enzyme';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import mock from 'mock-require';
+
+import 'whatwg-fetch';
 
 chai.use(chaiEnzyme());
 chai.use(sinonChai);
@@ -16,3 +19,4 @@ global.mount = mount;
 global.sinon = sinon;
 global.shallow = shallow;
 
+mock('config', '../config/development');
