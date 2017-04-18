@@ -1,18 +1,36 @@
 import React from 'react';
 import Work from '../Work';
 
+import config from 'config';
+
 describe('Work', () => {
   let component;
-
-  beforeEach(() => {
-    component = shallow(<Work />);
-  });
+  let fetchStub;
+  let fetchArguments;
+  let newState;
 
   context('Initialization', () => {
+    beforeEach(() => {
+      fetchStub = sinon.stub(window, 'fetch');
+      fetchArguments = config.rijksmuseumUrl;
 
+      component = shallow(<Work />);
+    });
+
+    afterEach(() => {
+      window.fetch.restore();
+    });
+
+    it('fetches from the Rijksmuseum API', () => {
+      expect(fetchStub.firstCall.args[0]).to.eql(fetchArguments);
+    });
   });
 
   context('Layout', () => {
+    beforeEach(() => {
+      component = shallow(<Work />);
+    });
+
     it('displays an image', () => {
       expect(component.find('img').length).to.eql(1);
     });
