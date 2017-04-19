@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Vollkorn');
+
+body {
+  font-family: 'Vollkorn', serif;
+  margin: 0;
+}
+
 img {
   max-width: 25vw;
 }
@@ -8,5 +15,21 @@ img {
 }
 
 .work {
+  position: relative;
   break-inside: avoid;
+}
+
+.work-information {
+  position: absolute;
+  width: 24vw;
+  margin-bottom: -50px;
+  padding: 0.5vw;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  box-decoration-break: clone;
+}
+
+.work-title {
+  font-style: italic;
+  margin-bottom: 15px;
 }

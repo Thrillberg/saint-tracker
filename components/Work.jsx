@@ -9,21 +9,12 @@ export default class Work extends Component {
     }
   }
 
-  displayWorkTitle() {
+  displayWorkInformation() {
     if (this.state.hovered) {
       return(
-        <div className='work-title'>
-          Title: {this.props.title}
-        </div>
-      )
-    }
-  }
-
-  displayArtistName() {
-    if (this.state.hovered) {
-      return(
-        <div className='artist-name'>
-          Artist: {this.props.artist}
+        <div className='work-information'>
+          <div className='work-title'>{this.props.title}</div>
+          <div className='artist'>{this.props.artist}</div>
         </div>
       )
     }
@@ -36,9 +27,8 @@ export default class Work extends Component {
         onMouseEnter={() => {this.setState({hovered: true})}}
         onMouseLeave={() => {this.setState({hovered: false})}}
       >
+        {this.displayWorkInformation()}
         <img src={this.props.work_url} className='work-image' />
-        {this.displayWorkTitle()}
-        {this.displayArtistName()}
       </div>
     )
   }
