@@ -10,16 +10,17 @@ img {
 }
 
 .works {
-  column-count: 3;
-  column-gap: 12vw;
+  columns: 3;
+  text-align: center;
 }
 
 .work {
-  position: relative;
+  display: inline-block;
   break-inside: avoid;
 }
 
 .work-information {
+  text-align: left;
   position: absolute;
   width: 24vw;
   margin-bottom: -50px;
