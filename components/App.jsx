@@ -7,9 +7,7 @@ export default class App extends Component {
     super();
 
     this.state = {
-      work_url: '',
-      title: '',
-      artist: ''
+      objects: []
     }
   }
 
@@ -20,12 +18,12 @@ export default class App extends Component {
         return res.json()
       })
       .then((body) => {
-        const object = body.artObject;
+        const objects = body.artObjects;
 
-        this.setState({
-          work_url: object.webImage.url,
-          title: object.title,
-          artist: object.principalMaker
+        objects.forEach((object) => {
+          this.setState({
+            objects: [...this.state.objects, object]
+          });
         });
       })
       .catch((err) => {
@@ -33,13 +31,28 @@ export default class App extends Component {
       });
   }
 
+  renderWorks() {
+    let toRender = [];
+
+    this.state.objects.forEach((object, index) => {
+      toRender.push(
+        <Work
+          key={index}
+          work_url={object.webImage.url.toString()}
+          title={object.title.toString()}
+          artist={object.principalOrFirstMaker.toString()}
+        />
+      )
+    });
+
+    return toRender;
+  }
+
   render() {
     return (
-      <Work
-        work_url={this.state.work_url}
-        title={this.state.title}
-        artist={this.state.artist}
-      />
+      <div>
+        {this.renderWorks()}
+      </div>
     )
   }
 }
