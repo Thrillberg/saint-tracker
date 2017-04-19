@@ -39,7 +39,7 @@ describe('Work', () => {
       });
 
       it('displays an artist name', () => {
-        expect(component.find('.artist-name').length).to.eql(1);
+        expect(component.find('.artist').length).to.eql(1);
       });
     });
 
