@@ -25,8 +25,17 @@ describe('App', () => {
     });
   });
 
-  it('renders a Work', () => {
-    component = shallow(<App />);
+  it('renders 1 Work', () => {
+    component = mount(<App />);
+    component.setState({
+      objects: [
+        {
+          webImage: { url: 'some-url' },
+          title: 'some-title',
+          principalOrFirstMaker: 'some-artist'
+        }
+      ]
+    });
 
     expect(component.find(Work).length).to.eql(1);
   });
