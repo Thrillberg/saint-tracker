@@ -3,6 +3,16 @@ import Work from './Work';
 import config from 'config';
 
 export default class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      work_url: '',
+      title: '',
+      artist: ''
+    }
+  }
+
   componentWillMount() {
     const path = config.rijksmuseumUrl;
     window.fetch(path)
@@ -23,19 +33,13 @@ export default class App extends Component {
       });
   }
 
-  setInitialState(response) {
-    const object = response.artObject;
-
-    this.setState({
-      work_url: object.webImage.url,
-      title: object.title,
-      artist: object.principalMaker
-    });
-  }
-
   render() {
     return (
-      <Work />
+      <Work
+        work_url={this.state.work_url}
+        title={this.state.title}
+        artist={this.state.artist}
+      />
     )
   }
 }
