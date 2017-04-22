@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Work from './Work';
 import config from 'config';
 
+import { GoogleMap, withGoogleMap } from 'react-google-maps';
+import withScriptjs from "react-google-maps/lib/async/withScriptjs";
+
 export default class App extends Component {
   constructor() {
     super();
@@ -78,11 +81,38 @@ export default class App extends Component {
   }
 
   render() {
+    const AsyncGoogleMap = withScriptjs(withGoogleMap (props => (
+      <GoogleMap
+        defaultZoom={4}
+        defaultCenter={{ lat: 48.2082, lng: 16.3738 }} >
+      </GoogleMap>
+    )));
+
     return (
       <div>
         {this.renderLoader()}
-        <div className='works'>
-          {this.renderWorks()}
+        <div className='columns'>
+          <div className='works'>
+            {this.renderWorks()}
+          </div>
+          <div className='map'>
+            <AsyncGoogleMap
+              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp"
+              loadingElement={
+                <div style={{ height: `100%` }}>
+                  <div>
+                    Loading...
+                  </div>
+                </div>
+              }
+              containerElement={
+                <div style={{ height: '40vw', width: '40vw' }} />
+              }
+              mapElement={
+                <div style={{ height: '40vw', width: '40vw' }} />
+              }
+            />
+          </div>
         </div>
       </div>
     )
