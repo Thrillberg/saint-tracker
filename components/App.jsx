@@ -7,11 +7,12 @@ export default class App extends Component {
     super();
 
     this.state = {
-      objects: []
+      objects: [],
+      loading: true
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const path = config.rijksmuseumUrl;
     window.fetch(path)
       .then((res) => {
@@ -21,10 +22,15 @@ export default class App extends Component {
         const objects = body.artObjects;
 
         objects.forEach((object) => {
-          this.setState({
-            objects: [...this.state.objects, object]
-          });
+          if (object.webImage) {
+            this.setState({
+              objects: [...this.state.objects, object]
+            });
+          }
         });
+      })
+      .then(() => {
+        this.setState({loading: false});
       })
       .catch((err) => {
         console.log(err);
@@ -58,10 +64,26 @@ export default class App extends Component {
     return array;
   }
 
+  renderLoader() {
+    if (this.state.loading) {
+      return (
+        <div className="loading">
+          <div className="sk-cube1 sk-cube"></div>
+          <div className="sk-cube2 sk-cube"></div>
+          <div className="sk-cube4 sk-cube"></div>
+          <div className="sk-cube3 sk-cube"></div>
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
-      <div className='works'>
-        {this.renderWorks()}
+      <div>
+        {this.renderLoader()}
+        <div className='works'>
+          {this.renderWorks()}
+        </div>
       </div>
     )
   }

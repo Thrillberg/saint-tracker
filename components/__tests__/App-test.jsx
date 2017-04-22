@@ -7,6 +7,7 @@ describe('App', () => {
   let component;
   let fetchStub;
   let fetchArguments;
+  let loadingCircle;
 
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch').resolves({then: () => {}});
@@ -18,8 +19,31 @@ describe('App', () => {
   });
 
   context('Initialization', () => {
+    describe('loading graphic', () => {
+      beforeEach(() => {
+        component = mount(<App />);
+      });
+
+      context('before artworks are loaded', () => {
+        it('renders loading graphic', () => {
+          loadingCircle = component.find('.loading');
+
+          expect(loadingCircle.length).to.eql(1);
+        });
+      });
+
+      context('after artworks are loaded', () => {
+        it('does not render the loading graphic', () => {
+          component.setState({loading: false});
+          loadingCircle = component.find('.loading');
+
+          expect(loadingCircle.length).to.eql(0);
+        });
+      });
+    });
+
     it('fetches from the Rijksmuseum API', () => {
-      component = shallow(<App />);
+      component = mount(<App />);
 
       expect(fetchStub.firstCall.args[0]).to.eql(fetchArguments);
     });
