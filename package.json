@@ -12,6 +12,7 @@
     "css-loader": "^0.28.0",
     "mock-require": "^2.0.2",
     "react": "^15.5.4",
+    "react-google-maps": "^6.3.0",
     "style-loader": "^0.16.1",
     "webpack": "^2.4.1"
   },

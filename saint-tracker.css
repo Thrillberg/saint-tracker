@@ -9,9 +9,14 @@ img {
   max-width: 25vw;
 }
 
+.columns {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
 .works {
-  columns: 3;
-  text-align: center;
+  columns: 2;
+  width: 50vw;
 }
 
 .work {
@@ -35,6 +40,12 @@ img {
   margin-bottom: 15px;
 }
 
+.map {
+  position: fixed;
+  right: 0;
+  width: 40vw;
+  height: 40vw
+}
 
 /* LOADING CIRCLE */
 

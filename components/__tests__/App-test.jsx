@@ -3,6 +3,8 @@ import App from '../App';
 import Work from '../Work';
 import config from 'config';
 
+import { GoogleMap } from 'react-google-maps';
+
 describe('App', () => {
   let component;
   let fetchStub;
@@ -62,5 +64,10 @@ describe('App', () => {
     });
 
     expect(component.find(Work).length).to.eql(1);
+  });
+
+  it('renders a map', () => {
+    component = mount(<App />);
+    expect(component.find('.map').length).to.eql(1);
   });
 });
