@@ -11,7 +11,6 @@ const AsyncGoogleMap = withScriptjs(withGoogleMap (props => (
     defaultZoom={4}
     defaultCenter={{ lat: 48.2082, lng: 16.3738 }} >
     <MarkerClusterer
-      averageCenter
       enableRetinaIcons
       gridSize={60} >
       {
@@ -19,7 +18,7 @@ const AsyncGoogleMap = withScriptjs(withGoogleMap (props => (
           <Marker
             key={index}
             onClick={() => {props._onMarkerClick(marker)}}
-            {...marker}>
+            position={marker.position}>
             {marker.showInfo && (
               <InfoWindow>
                 {marker.infoContent}
@@ -59,7 +58,8 @@ export default class Map extends Component {
             markers: [
               ...this.state.markers,
               { position:
-                { lat, lng },
+                { lat: lat + Math.random() * 0.001,
+                  lng: lng + Math.random() * 0.001 },
                 showInfo: false,
                 infoContent: (
                   <div
