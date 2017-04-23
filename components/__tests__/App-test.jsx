@@ -8,12 +8,10 @@ import { GoogleMap } from 'react-google-maps';
 describe('App', () => {
   let component;
   let fetchStub;
-  let fetchArguments;
   let loadingCircle;
 
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch').resolves({then: () => {}});
-    fetchArguments = config.rijksmuseumUrl;
   });
 
   afterEach(() => {
@@ -47,7 +45,7 @@ describe('App', () => {
     it('fetches from the Rijksmuseum API', () => {
       component = mount(<App />);
 
-      expect(fetchStub.firstCall.args[0]).to.eql(fetchArguments);
+      expect(fetchStub.calledOnce).to.eql(true);
     });
   });
 
