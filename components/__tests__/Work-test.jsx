@@ -65,17 +65,20 @@ describe('Work', () => {
     });
 
     describe('on click', () => {
+      let toggleWorkModalStub;
+
       beforeEach(() => {
-        component = shallow(<Work />);
+        toggleWorkModalStub = sinon.stub();
+        component = mount(<Work toggleWorkModal={toggleWorkModalStub} />);
         component.find('img').simulate('click');
       });
 
       it('displays a modal', () => {
-        expect(component.find(WorkModal).length).to.eql(1);
+        expect(toggleWorkModalStub.calledOnce).to.eql(true);
       });
 
       it('closes the modal', () => {
-        component.instance().toggleWorkModal();
+        component.find('img').simulate('click');
 
         expect(component.find(WorkModal).length).to.eql(0);
       });

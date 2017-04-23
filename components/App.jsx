@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Work from './Work';
+import WorkModal from './WorkModal';
 import Map from './Map';
 import config from 'config';
 
@@ -10,7 +11,9 @@ export default class App extends Component {
 
     this.state = {
       objects: [],
-      loading: true
+      loading: true,
+      displayModal: false,
+      workModal: null
     }
   }
 
@@ -34,7 +37,7 @@ export default class App extends Component {
       })
       .then((newObjects) => {
         this.setState({
-          objects: newObjects
+          objects: this.shuffle(newObjects)
         });
       })
       .then(() => {
@@ -52,6 +55,7 @@ export default class App extends Component {
       toRender.push(
         <Work
           key={index}
+          toggleWorkModal={this.toggleWorkModal}
           work_url={object.webImage.url.toString()}
           title={object.title.toString()}
           artist={object.principalOrFirstMaker.toString()}
@@ -59,7 +63,7 @@ export default class App extends Component {
       )
     });
 
-    return this.shuffle(toRender);
+    return toRender;
   }
 
   shuffle(array) {
@@ -85,6 +89,35 @@ export default class App extends Component {
     }
   }
 
+  toggleWorkModal = (work) => {
+    this.setState({
+      displayModal: !this.state.displayModal,
+      workModal: work
+    }, this.displayWorkModal);
+  }
+
+  displayWorkModal() {
+    if (this.state.displayModal) {
+      return (
+        <WorkModal
+          closeModal={this.toggleWorkModal}
+          imageUrl={this.state.workModal.work_url}
+          title={this.state.workModal.title}
+          artistName={this.state.workModal.artist} />
+      )
+    }
+  }
+
+  displayMap() {
+    if (!this.state.loading) {
+      return (
+        <Map
+          objects={this.state.objects}
+          toggleWorkModal={this.toggleWorkModal} />
+      )
+    }
+  }
+
   render() {
     return (
       <div>
@@ -93,8 +126,9 @@ export default class App extends Component {
           <div className='works'>
             {this.renderWorks()}
           </div>
-          <Map objects={this.state.objects} />
+          {this.displayMap()}
         </div>
+        {this.displayWorkModal()}
       </div>
     )
   }
