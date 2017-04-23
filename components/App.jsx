@@ -28,18 +28,25 @@ export default class App extends Component {
         const objects = body.artObjects;
         let newObjects = [];
 
-        objects.forEach((object) => {
+        return objects.map((object) => {
           if (object.webImage && object.productionPlaces.length > 0) {
-            newObjects = [...newObjects, object];
+            const objectNumber = object.objectNumber;
+            const detailPath = config.rijksmuseumDetailUrl(objectNumber);
+            window.fetch(detailPath)
+              .then(res => {
+                return res.json()
+              })
+              .then((workBody) => {
+                newObjects = [...newObjects, workBody.artObject]
+                return newObjects;
+              })
+              .then((newObjects) => {
+                this.setState({
+                  objects: this.shuffle(newObjects)
+                });
+              })
           }
         })
-
-        return newObjects;
-      })
-      .then((newObjects) => {
-        this.setState({
-          objects: this.shuffle(newObjects)
-        });
       })
       .then(() => {
         this.setState({loading: false});
