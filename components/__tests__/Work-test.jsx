@@ -1,5 +1,6 @@
 import React from 'react';
 import Work from '../Work';
+import WorkModal from '../WorkModal';
 
 import config from 'config';
 
@@ -24,6 +25,10 @@ describe('Work', () => {
 
     it('does not display an artist name', () => {
       expect(component.find('.artist-name').length).to.eql(0);
+    });
+
+    it('does not display a work modal', () => {
+      expect(component.find(WorkModal).length).to.eql(0);
     });
   });
 
@@ -56,6 +61,23 @@ describe('Work', () => {
 
       it('displays an artist name', () => {
         expect(component.find('.artist-name').length).to.eql(0);
+      });
+    });
+
+    describe('on click', () => {
+      beforeEach(() => {
+        component = shallow(<Work />);
+        component.find('img').simulate('click');
+      });
+
+      it('displays a modal', () => {
+        expect(component.find(WorkModal).length).to.eql(1);
+      });
+
+      it('closes the modal', () => {
+        component.instance().toggleWorkModal();
+
+        expect(component.find(WorkModal).length).to.eql(0);
       });
     });
   });
