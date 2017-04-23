@@ -1,6 +1,6 @@
 import React from 'react';
 import App from '../App';
-import Work from '../Work';
+import Map from '../Map';
 import config from 'config';
 
 import { GoogleMap } from 'react-google-maps';
@@ -23,7 +23,7 @@ describe('App', () => {
   context('Initialization', () => {
     describe('loading graphic', () => {
       beforeEach(() => {
-        component = mount(<App />);
+        component = shallow(<App />);
       });
 
       context('before artworks are loaded', () => {
@@ -51,23 +51,13 @@ describe('App', () => {
     });
   });
 
-  it('renders 1 Work', () => {
+  it('renders works', () => {
     component = mount(<App />);
-    component.setState({
-      objects: [
-        {
-          webImage: { url: 'some-url' },
-          title: 'some-title',
-          principalOrFirstMaker: 'some-artist'
-        }
-      ]
-    });
-
-    expect(component.find(Work).length).to.eql(1);
+    expect(component.find('.works').length).to.eql(1);
   });
 
-  it('renders a map', () => {
+  it('renders a Map', () => {
     component = mount(<App />);
-    expect(component.find('.map').length).to.eql(1);
+    expect(component.find(Map).length).to.eql(1);
   });
 });
