@@ -47,6 +47,10 @@ img {
   height: 40vw
 }
 
+.small-work {
+  max-height: 200px;
+}
+
 /* LOADING CIRCLE */
 
 .loading {
