@@ -18,7 +18,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const path = config.rijksmuseumUrl;
+    const page = Math.floor(Math.random() * 2);
+    const path = config.rijksmuseumUrl(page);
     window.fetch(path)
       .then((res) => {
         return res.json()
