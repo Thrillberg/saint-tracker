@@ -58,6 +58,7 @@ describe('App', () => {
 
   it('renders a Map', () => {
     component = mount(<App />);
+    component.setState({loading: false});
     expect(component.find(Map).length).to.eql(1);
   });
 });

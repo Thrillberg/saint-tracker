@@ -18,11 +18,11 @@ const AsyncGoogleMap = withScriptjs(withGoogleMap (props => (
         props.markers.map((marker, index) => (
           <Marker
             key={index}
-            onClick={ () => {props._onMarkerClick(marker)}}
+            onClick={() => {props._onMarkerClick(marker)}}
             {...marker}>
             {marker.showInfo && (
               <InfoWindow>
-                <div>{marker.infoContent}</div>
+                {marker.infoContent}
               </InfoWindow>
             )}
           </Marker>
@@ -41,7 +41,7 @@ export default class Map extends Component {
     }
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     this.props.objects.forEach(object => {
       window.fetch(config.googleGeocoder(object.productionPlaces[0]))
         .then(result => {
@@ -50,6 +50,11 @@ export default class Map extends Component {
         .then(body => {
           let lat = body.results[0].geometry.location.lat
           let lng = body.results[0].geometry.location.lng
+          let work = {
+            work_url: object.webImage.url,
+            title: object.title,
+            artist: object.principalOrFirstMaker
+          }
           this.setState({
             markers: [
               ...this.state.markers,
@@ -57,7 +62,8 @@ export default class Map extends Component {
                 { lat, lng },
                 showInfo: false,
                 infoContent: (
-                  <div>
+                  <div
+                    onClick={() => {this.props.toggleWorkModal(work)}}>
                     <img src={object.webImage.url} className='small-work'/>
                     <div>
                       {object.title}
@@ -84,7 +90,7 @@ export default class Map extends Component {
           return {
             position: marker.position,
             infoContent: marker.infoContent,
-            showInfo: true
+            showInfo: !marker.showInfo
           };
         }
         return marker;
@@ -107,6 +113,7 @@ export default class Map extends Component {
             <div style={{ height: '40vw', width: '40vw' }} />
           }
           _onMarkerClick={this._onMarkerClick}
+          toggleWorkModal={this.props.toggleWorkModal}
           markers={this.state.markers}
         />
       </div>

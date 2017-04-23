@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import WorkModal from './WorkModal';
 
 export default class Work extends Component {
   constructor() {
     super();
 
     this.state = {
-      hovered: false,
-      displayModal: false
+      hovered: false
     }
   }
 
@@ -18,22 +16,6 @@ export default class Work extends Component {
           <div className='work-title'>{this.props.title}</div>
           <div className='artist'>{this.props.artist}</div>
         </div>
-      )
-    }
-  }
-
-  toggleWorkModal = () => {
-    this.setState({displayModal: !this.state.displayModal});
-  }
-
-  displayWorkModal() {
-    if (this.state.displayModal) {
-      return (
-        <WorkModal
-          closeModal={this.toggleWorkModal}
-          imageUrl={this.props.work_url}
-          title={this.props.title}
-          artistName={this.props.artist} />
       )
     }
   }
@@ -49,8 +31,7 @@ export default class Work extends Component {
         <img
           src={this.props.work_url}
           className='work-image'
-          onClick={this.toggleWorkModal} />
-        {this.displayWorkModal()}
+          onClick={() => this.props.toggleWorkModal(this.props)} />
       </div>
     )
   }
