@@ -58,6 +58,7 @@ export default class Map extends Component {
                 showInfo: false,
                 infoContent: (
                   <div>
+                    <img src={object.webImage.url} className='small-work'/>
                     <div>
                       {object.title}
                     </div>
@@ -81,8 +82,8 @@ export default class Map extends Component {
       markers: this.state.markers.map(marker => {
         if (marker === currentMarker) {
           return {
-            [marker.position]: marker.position,
-            [marker.infoContent]: marker.infoContent,
+            position: marker.position,
+            infoContent: marker.infoContent,
             showInfo: true
           };
         }
