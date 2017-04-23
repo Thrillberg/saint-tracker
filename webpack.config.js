@@ -31,7 +31,8 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        RIJKSMUSEUM_KEY: JSON.stringify('9QfgAMuT')
+        RIJKSMUSEUM_KEY: JSON.stringify('9QfgAMuT'),
+        GOOGLE_GEOCODER_KEY: JSON.stringify('AIzaSyBHJ3RA557bKXZnG0RSiLSmUX1TSTcG5vg')
       }
     })
   ],
