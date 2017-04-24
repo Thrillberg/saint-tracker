@@ -36,7 +36,8 @@ export default class Map extends Component {
     super();
 
     this.state = {
-      markers: []
+      markers: [],
+      sliderValue: '17'
     }
   }
 
@@ -98,6 +99,14 @@ export default class Map extends Component {
     });
   }
 
+  _handleSliderChange = (evt) => {
+    this.setState({sliderValue: evt.target.value});
+  }
+
+  translateCentury(century) {
+    return `${century}th century`
+  }
+
   render() {
     return (
       <div className="map">
@@ -116,6 +125,13 @@ export default class Map extends Component {
           toggleWorkModal={this.props.toggleWorkModal}
           markers={this.state.markers}
         />
+        <input
+          value={this.state.sliderValue}
+          onChange={this._handleSliderChange}
+          type="range"
+          min="12"
+          max="20" />
+        <h1 className="slider-century">{this.translateCentury(this.state.sliderValue)}</h1>
       </div>
     )
   }
