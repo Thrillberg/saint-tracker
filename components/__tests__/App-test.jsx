@@ -59,4 +59,11 @@ describe('App', () => {
     component.setState({loading: false});
     expect(component.find(Map).length).to.eql(1);
   });
+
+  it('renders a range slider', () => {
+    component = shallow(<App />);
+    component.setState({loading: false});
+    expect(component.find('input').length).to.eql(1);
+    expect(component.find('.slider-century').length).to.eql(1);
+  });
 });

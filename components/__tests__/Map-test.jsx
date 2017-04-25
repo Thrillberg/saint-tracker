@@ -32,13 +32,8 @@ describe('Map', () => {
       component = shallow(<Map />);
       component.setState({loading: false});
 
-      expect(component.find('.map').length).to.eql(1);
+      expect(component.find('.map-container').length).to.eql(1);
     });
 
-    it('renders a range slider', () => {
-      component = shallow(<Map />);
-      expect(component.find('input').length).to.eql(1);
-      expect(component.find('.slider-century').length).to.eql(1);
-    });
   });
 });

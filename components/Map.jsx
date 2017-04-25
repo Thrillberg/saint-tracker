@@ -36,13 +36,22 @@ export default class Map extends Component {
     super();
 
     this.state = {
-      markers: [],
-      sliderValue: '17'
+      markers: []
     }
   }
 
   componentDidMount() {
-    this.props.objects.forEach(object => {
+    this.updateMarkers(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.updateMarkers(nextProps);
+  }
+
+  updateMarkers(props) {
+    this.setState({markers: []});
+
+    props.objects.forEach(object => {
       window.fetch(config.googleGeocoder(object.productionPlaces[0]))
         .then(result => {
           return result.json()
@@ -73,7 +82,8 @@ export default class Map extends Component {
                       {object.principalOrFirstMaker}
                     </div>
                   </div>
-                )
+                ),
+                objectNumber: object.objectNumber
               }
             ]
           });
@@ -99,17 +109,9 @@ export default class Map extends Component {
     });
   }
 
-  _handleSliderChange = (evt) => {
-    this.setState({sliderValue: evt.target.value});
-  }
-
-  translateCentury(century) {
-    return `${century}th century`
-  }
-
   render() {
     return (
-      <div className="map">
+      <div className="map-container">
         <AsyncGoogleMap
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp"
           loadingElement={
@@ -125,13 +127,6 @@ export default class Map extends Component {
           toggleWorkModal={this.props.toggleWorkModal}
           markers={this.state.markers}
         />
-        <input
-          value={this.state.sliderValue}
-          onChange={this._handleSliderChange}
-          type="range"
-          min="12"
-          max="20" />
-        <h1 className="slider-century">{this.translateCentury(this.state.sliderValue)}</h1>
       </div>
     )
   }
