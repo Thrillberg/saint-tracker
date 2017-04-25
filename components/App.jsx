@@ -14,7 +14,8 @@ export default class App extends Component {
       validObjects: [],
       loading: true,
       displayModal: false,
-      workModal: null
+      workModal: null,
+      sliderValue: '16'
     }
   }
 
@@ -71,7 +72,7 @@ export default class App extends Component {
     if (!this.state.loading) {
       let toRender = [];
 
-      this.state.objects.forEach((object, index) => {
+      this.state.objects.filter(this.findWorkInCentury).forEach((object, index) => {
         toRender.push(
           <Work
             key={index}
@@ -84,6 +85,14 @@ export default class App extends Component {
       });
 
       return toRender;
+    }
+  }
+
+  findWorkInCentury = (object) => {
+    if (object.dating.period === parseInt(this.state.sliderValue)) {
+      return true;
+    } else {
+      return false
     }
   }
 
@@ -133,10 +142,36 @@ export default class App extends Component {
     if (!this.state.loading) {
       return (
         <Map
-          objects={this.state.objects}
+          objects={this.state.objects.filter(this.findWorkInCentury)}
           toggleWorkModal={this.toggleWorkModal} />
       )
     }
+  }
+
+  displaySlider() {
+    if (!this.state.loading) {
+      return (
+        <div>
+          <input
+            value={this.state.sliderValue}
+            onChange={this._handleSliderChange}
+            type="range"
+            min="12"
+            max="20" />
+          <h1 className="slider-century">
+            {this.translateCentury(this.state.sliderValue)}
+          </h1>
+        </div>
+      )
+    }
+  }
+
+  _handleSliderChange = (evt) => {
+    this.setState({sliderValue: evt.target.value});
+  }
+
+  translateCentury(century) {
+    return `${century}th century`
   }
 
   render() {
@@ -147,7 +182,10 @@ export default class App extends Component {
           <div className='works'>
             {this.renderWorks()}
           </div>
-          {this.displayMap()}
+          <div className="map">
+            {this.displayMap()}
+            {this.displaySlider()}
+          </div>
         </div>
         {this.displayWorkModal()}
       </div>
