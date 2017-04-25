@@ -11,6 +11,7 @@ export default class App extends Component {
 
     this.state = {
       objects: [],
+      validObjects: [],
       loading: true,
       displayModal: false,
       workModal: null
@@ -20,6 +21,8 @@ export default class App extends Component {
   componentDidMount() {
     const page = Math.floor(Math.random() * 2);
     const path = config.rijksmuseumUrl(page);
+    let count = 0;
+
     window.fetch(path)
       .then((res) => {
         return res.json()
@@ -28,50 +31,60 @@ export default class App extends Component {
         const objects = body.artObjects;
         let newObjects = [];
 
-        return objects.map((object) => {
-          if (object.webImage && object.productionPlaces.length > 0) {
-            const objectNumber = object.objectNumber;
-            const detailPath = config.rijksmuseumDetailUrl(objectNumber);
-            window.fetch(detailPath)
-              .then(res => {
-                return res.json()
-              })
-              .then((workBody) => {
-                newObjects = [...newObjects, workBody.artObject]
-                return newObjects;
-              })
-              .then((newObjects) => {
-                this.setState({
-                  objects: this.shuffle(newObjects)
-                });
-              })
-          }
+        objects.filter(this.checkForValidity).forEach(object => {
+          const objectNumber = object.objectNumber;
+          const detailPath = config.rijksmuseumDetailUrl(objectNumber);
+          window.fetch(detailPath)
+            .then(res => {
+              return res.json()
+            })
+            .then((workBody) => {
+              newObjects = [...newObjects, workBody.artObject]
+              return newObjects;
+            })
+            .then((newObjects) => {
+              count++
+              this.setState({
+                objects: this.shuffle(newObjects)
+              });
+              if (count === this.state.validObjects.length) {
+                this.setState({loading: false});
+              }
+            })
         })
-      })
-      .then(() => {
-        this.setState({loading: false});
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  checkForValidity = (object, index, objects) => {
+    if (object.webImage && object.productionPlaces.length > 0) {
+      this.setState({validObjects: [...this.state.validObjects, object]});
+      return true;
+    } else {
+      return false
+    }
+  }
+
   renderWorks() {
-    let toRender = [];
+    if (!this.state.loading) {
+      let toRender = [];
 
-    this.state.objects.forEach((object, index) => {
-      toRender.push(
-        <Work
-          key={index}
-          toggleWorkModal={this.toggleWorkModal}
-          work_url={object.webImage.url.toString()}
-          title={object.title.toString()}
-          artist={object.principalOrFirstMaker.toString()}
-        />
-      )
-    });
+      this.state.objects.forEach((object, index) => {
+        toRender.push(
+          <Work
+            key={index}
+            toggleWorkModal={this.toggleWorkModal}
+            work_url={object.webImage.url.toString()}
+            title={object.title.toString()}
+            artist={object.principalOrFirstMaker.toString()}
+          />
+        )
+      });
 
-    return toRender;
+      return toRender;
+    }
   }
 
   shuffle(array) {
