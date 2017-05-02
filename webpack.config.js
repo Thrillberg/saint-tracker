@@ -32,6 +32,7 @@ const config = {
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
         RIJKSMUSEUM_KEY: JSON.stringify('9QfgAMuT'),
+        HARVARD_KEY: JSON.stringify('89a9df20-2960-11e7-85c6-0d6a987bcf37'),
         GOOGLE_GEOCODER_KEY: JSON.stringify('AIzaSyBHJ3RA557bKXZnG0RSiLSmUX1TSTcG5vg')
       }
     })

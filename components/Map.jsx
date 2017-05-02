@@ -49,10 +49,14 @@ export default class Map extends Component {
   }
 
   updateMarkers(props) {
-    this.setState({markers: []});
+    this.setState({markers: []}, this.getCoords(props));
+  }
+
+  getCoords(props) {
+    let newMarkers = [];
 
     props.objects.forEach(object => {
-      window.fetch(config.googleGeocoder(object.productionPlaces[0]))
+      window.fetch(config.googleGeocoder(object.place))
         .then(result => {
           return result.json()
         })
@@ -60,33 +64,33 @@ export default class Map extends Component {
           let lat = body.results[0].geometry.location.lat
           let lng = body.results[0].geometry.location.lng
           let work = {
-            work_url: object.webImage.url,
+            work_url: object.image,
             title: object.title,
-            artist: object.principalOrFirstMaker
+            artist: object.artist
           }
-          this.setState({
-            markers: [
-              ...this.state.markers,
-              { position:
-                { lat: lat + Math.random() * 0.001,
-                  lng: lng + Math.random() * 0.001 },
-                showInfo: false,
-                infoContent: (
-                  <div
-                    onClick={() => {this.props.toggleWorkModal(work)}}>
-                    <img src={object.webImage.url} className='small-work'/>
-                    <div>
-                      {object.title}
-                    </div>
-                    <div>
-                      {object.principalOrFirstMaker}
-                    </div>
-                  </div>
-                ),
-                objectNumber: object.objectNumber
-              }
-            ]
-          });
+          newMarkers.push({
+            position: {
+              lat: lat + Math.random() * 0.001,
+                lng: lng + Math.random() * 0.001
+            },
+            showInfo: false,
+            infoContent: (
+              <div
+                onClick={() => {this.props.toggleWorkModal(work)}}>
+                <img src={object.image} className='small-work'/>
+                <div>
+                  {object.title}
+                </div>
+                <div>
+                  {object.principalOrFirstMaker}
+                </div>
+              </div>
+            ),
+            objectNumber: object.objectNumber
+          })
+        })
+        .then(() => {
+          this.setState({markers: newMarkers});
         })
         .catch(err => {
           console.log(err);
@@ -115,7 +119,7 @@ export default class Map extends Component {
         <AsyncGoogleMap
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp"
           loadingElement={
-            <div className="loading" />
+            <div className="loading-map" />
           }
           containerElement={
             <div style={{ height: '40vw', width: '40vw' }} />

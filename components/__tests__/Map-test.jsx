@@ -7,11 +7,9 @@ describe('Map', () => {
   let component;
   let loadingCircle;
   let fetchStub;
-  let fetchArguments;
 
   beforeEach(() => {
     fetchStub = sinon.stub(window, 'fetch').resolves({then: () => {}});
-    fetchArguments = config.googleGeocoder('Vienna');
   });
 
   afterEach(() => {
@@ -23,7 +21,7 @@ describe('Map', () => {
       component = mount(<Map objects={[{productionPlaces: ['Vienna']}]} />);
       component.update();
 
-      expect(fetchStub.firstCall.args[0]).to.eql(fetchArguments);
+      expect(fetchStub.called).to.eql(true);
     });
   });
 
