@@ -21,12 +21,12 @@ export default class App extends Component {
         harvard: {
           url: harvardUrl,
           loading: true,
-          objects: {}
+          objects: []
         },
         rijksmuseum: {
           url: rijksmuseumUrl,
           loading: true,
-          objects: {}
+          objects: []
         }
       }
     }
@@ -59,6 +59,11 @@ export default class App extends Component {
         }
       })
       .catch((err) => {
+        const newMuseum = Object.assign({}, this.state.museums[museumName], {loading: false});
+        const newMuseums = Object.assign({}, this.state.museums, {[museumName]: newMuseum});
+        this.setState({
+          museums: newMuseums
+        });
         console.log(err);
       });
   }
@@ -128,10 +133,10 @@ export default class App extends Component {
       harvard = Object.assign(harvard, {objects: newObjects});
     })
 
-      const newMuseum = Object.assign({}, this.state.museums.harvard, {loading: false});
-      const newMuseums = Object.assign({}, this.state.museums, {harvard: newMuseum});
-      this.setState({museums: newMuseums});
-      this.updateLoadingState();
+    const newMuseum = Object.assign({}, this.state.museums.harvard, {loading: false});
+    const newMuseums = Object.assign({}, this.state.museums, {harvard: newMuseum});
+    this.setState({museums: newMuseums});
+    this.updateLoadingState();
   }
 
   updateLoadingState() {
