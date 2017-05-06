@@ -45,7 +45,11 @@ export default class Map extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.updateMarkers(nextProps);
+    if (this.props.objects[0] !== nextProps.objects[0]) {
+      this.updateMarkers(nextProps);
+    }
+
+    return null;
   }
 
   updateMarkers(props) {
