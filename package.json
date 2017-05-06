@@ -1,7 +1,7 @@
 {
   "name": "saint-tracker",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Saint Tracker is an open-source art appreciation tool that allows users to view works of art featuring saints.",
   "main": "index.js",
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -36,6 +36,6 @@
     "build": "webpack --progress --colors",
     "dev": "webpack-dev-server --inline"
   },
-  "author": "",
+  "author": "Eric Tillberg",
   "license": "ISC"
 }
