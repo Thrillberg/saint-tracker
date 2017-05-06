@@ -1,29 +1,13 @@
 import React from 'react';
 import Work from '../Work';
+import WorkModal from '../WorkModal';
 
 import config from 'config';
 
 describe('Work', () => {
   let component;
-  let fetchStub;
-  let fetchArguments;
-  let newState;
 
   context('Initialization', () => {
-    beforeEach(() => {
-      fetchStub = sinon.stub(window, 'fetch');
-      fetchArguments = config.rijksmuseumUrl;
-
-      component = shallow(<Work />);
-    });
-
-    afterEach(() => {
-      window.fetch.restore();
-    });
-
-    it('fetches from the Rijksmuseum API', () => {
-      expect(fetchStub.firstCall.args[0]).to.eql(fetchArguments);
-    });
   });
 
   context('Layout', () => {
@@ -35,16 +19,69 @@ describe('Work', () => {
       expect(component.find('img').length).to.eql(1);
     });
 
-    it('displays a title', () => {
-      expect(component.find('.work-title').length).to.eql(1);
+    it('does not display a title', () => {
+      expect(component.find('.work-title').length).to.eql(0);
     });
 
-    it('displays an artist name', () => {
-      expect(component.find('.artist-name').length).to.eql(1);
+    it('does not display an artist name', () => {
+      expect(component.find('.artist-name').length).to.eql(0);
+    });
+
+    it('does not display a work modal', () => {
+      expect(component.find(WorkModal).length).to.eql(0);
     });
   });
 
   context('Interaction', () => {
+    context('on mouse enter', () => {
+      beforeEach(() => {
+        component = shallow(<Work />);
+        component.simulate('mouseEnter');
+      });
 
+      it('displays a title', () => {
+        expect(component.find('.work-title').length).to.eql(1);
+      });
+
+      it('displays an artist name', () => {
+        expect(component.find('.artist').length).to.eql(1);
+      });
+    });
+
+    context('on mouse leave', () => {
+      beforeEach(() => {
+        component = shallow(<Work />);
+        component.simulate('mouseEnter');
+        component.simulate('mouseLeave');
+      });
+
+      it('displays a title', () => {
+        expect(component.find('.work-title').length).to.eql(0);
+      });
+
+      it('displays an artist name', () => {
+        expect(component.find('.artist-name').length).to.eql(0);
+      });
+    });
+
+    describe('on click', () => {
+      let toggleWorkModalStub;
+
+      beforeEach(() => {
+        toggleWorkModalStub = sinon.stub();
+        component = mount(<Work toggleWorkModal={toggleWorkModalStub} />);
+        component.find('img').simulate('click');
+      });
+
+      it('displays a modal', () => {
+        expect(toggleWorkModalStub.calledOnce).to.eql(true);
+      });
+
+      it('closes the modal', () => {
+        component.find('img').simulate('click');
+
+        expect(component.find(WorkModal).length).to.eql(0);
+      });
+    });
   });
 });
