@@ -204,7 +204,7 @@ export default class App extends Component {
           closeModal={this.toggleWorkModal}
           imageUrl={this.state.workModal.work_url}
           title={this.state.workModal.title}
-          artistName={this.state.workModal.artist} />
+          artist={this.state.workModal.artist} />
       )
     }
   }
@@ -254,9 +254,16 @@ export default class App extends Component {
   }
 
   render() {
+    const header =
+        <div className='header'>
+          <h1>Saint Tracker</h1>
+        </div>
+
     return (
       <div>
         {this.renderLoader()}
+        {header}
+        <div className='spacer' />
         <div className='columns'>
           <div className='works'>
             {this.renderWorks()}

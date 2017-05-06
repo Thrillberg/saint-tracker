@@ -54,18 +54,24 @@ describe('App', () => {
     });
   });
 
-  it('renders works', () => {
-    expect(component.find('.works').length).to.eql(1);
-  });
+  context('Layout', () => {
+    it('renders a header', () => {
+      expect(component.find('.header').length).to.eql(1);
+    });
 
-  it('renders a Map', () => {
-    component.setState({loading: false});
-    expect(component.find(Map).length).to.eql(1);
-  });
+    it('renders works', () => {
+      expect(component.find('.works').length).to.eql(1);
+    });
 
-  it('renders a range slider', () => {
-    component.setState({loading: false});
-    expect(component.find('input').length).to.eql(1);
-    expect(component.find('.slider-century').length).to.eql(1);
+    it('renders a Map', () => {
+      component.setState({loading: false});
+      expect(component.find(Map).length).to.eql(1);
+    });
+
+    it('renders a range slider', () => {
+      component.setState({loading: false});
+      expect(component.find('input').length).to.eql(1);
+      expect(component.find('.slider-century').length).to.eql(1);
+    });
   });
 });

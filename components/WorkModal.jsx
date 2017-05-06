@@ -8,8 +8,8 @@ export default class WorkModal extends Component{
         onClick={this.props.closeModal} >
         <div className="modal">
           <img src={this.props.imageUrl} />
-          <div className="title">{this.props.title}</div>
-          <div className="artist-name">{this.props.principalOrFirstMaker}</div>
+          <h3 className="title">{this.props.title}</h3>
+          <h3 className="artist-name">{this.props.artist}</h3>
         </div>
       </div>
     )

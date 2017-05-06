@@ -126,10 +126,10 @@ export default class Map extends Component {
             <div className="loading-map" />
           }
           containerElement={
-            <div style={{ height: '40vw', width: '40vw' }} />
+            <div style={{ height: '60vh', width: '40vw' }} />
           }
           mapElement={
-            <div style={{ height: '40vw', width: '40vw' }} />
+            <div style={{ height: '60vh', width: '40vw' }} />
           }
           _onMarkerClick={this._onMarkerClick}
           toggleWorkModal={this.props.toggleWorkModal}

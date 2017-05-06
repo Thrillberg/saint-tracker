@@ -8,7 +8,23 @@ body {
 
 /* STYLES*/
 
-img {
+.header {
+  position: fixed;
+  background-color: white;
+  border-bottom: 25px solid black;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.header h1 {
+  margin: 20px 50px;
+}
+
+.spacer {
+  height: 120px;
+}
+
+.work img {
   max-width: 23vw;
 }
 
@@ -52,7 +68,7 @@ img {
   position: fixed;
   right: 0;
   width: 40vw;
-  height: 40vw;
+  height: 60vh;
   margin: 0 50px;
   border: 5px solid black;
 }
@@ -115,8 +131,14 @@ img {
   z-index: 9999;
   background: black;
   color: white;
-  max-width: 23vw;
   border: 5px solid black;
+  max-height: 100vh;
+  max-width: 100vw;
+}
+
+.modal img {
+  max-height: 80vh;
+  max-width: 100vw;
 }
 
 /* LOADING CIRCLE */
