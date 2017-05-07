@@ -35,7 +35,8 @@
     "ci": "npm run build && npm run test",
     "test": "mocha",
     "build": "webpack --progress --colors",
-    "dev": "webpack-dev-server --inline"
+    "dev": "webpack-dev-server --inline",
+    "postinstall": "npm run build"
   },
   "author": "Eric Tillberg",
   "license": "ISC"
