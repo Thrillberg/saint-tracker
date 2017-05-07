@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -35,7 +36,11 @@ const config = {
         HARVARD_KEY: JSON.stringify('89a9df20-2960-11e7-85c6-0d6a987bcf37'),
         GOOGLE_GEOCODER_KEY: JSON.stringify('AIzaSyBHJ3RA557bKXZnG0RSiLSmUX1TSTcG5vg')
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      {from: 'index.html'},
+      {from: 'favicon.ico'}
+    ])
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
