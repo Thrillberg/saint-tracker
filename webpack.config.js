@@ -29,7 +29,6 @@ const config = {
     publicPath: '/'
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
@@ -58,14 +57,5 @@ const config = {
     historyApiFallback: true
   }
 };
-
-if (NODE_ENV === 'production') {
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: true,
-      sourceMap: true
-    })
-  );
-}
 
 module.exports = config;
